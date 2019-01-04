@@ -1,6 +1,5 @@
 package net.moddedminecraft.mmcrestrict.Commands;
 
-import net.moddedminecraft.mmcrestrict.Config.Messages;
 import net.moddedminecraft.mmcrestrict.Main;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -18,7 +17,7 @@ public class CheckChunks implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         plugin.checkLoadedChunks();
-        src.sendMessage(plugin.fromLegacy(Messages.checkStarted));
+        src.sendMessage(plugin.fromLegacy("Chunk searching has been initiated. All world banned items will be removed if found."));
         return CommandResult.success();
     }
 }

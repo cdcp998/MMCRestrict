@@ -1,6 +1,5 @@
 package net.moddedminecraft.mmcrestrict.Commands;
 
-import net.moddedminecraft.mmcrestrict.Config.Messages;
 import net.moddedminecraft.mmcrestrict.Data.ItemData;
 import net.moddedminecraft.mmcrestrict.Main;
 import net.moddedminecraft.mmcrestrict.Permissions;
@@ -16,7 +15,6 @@ import org.spongepowered.api.text.action.TextActions;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 public class BanList implements CommandExecutor {
     private final Main plugin;
@@ -32,50 +30,57 @@ public class BanList implements CommandExecutor {
         PaginationService paginationService = Sponge.getServiceManager().provide(PaginationService.class).get();
         java.util.List<Text> contents = new ArrayList<>();
         for (ItemData item : items) {
-            HashMap<String, String> arguments = new HashMap<>();
-            arguments.put("banreason", item.getBanreason());
-            arguments.put("itemid", item.getItemid());
-            arguments.put("usebanned", item.getUsagebanned().toString());
-            arguments.put("breakbanned", item.getBreakingbanned().toString());
-            arguments.put("placebanned", item.getPlacingbanned().toString());
-            arguments.put("ownbanned", item.getOwnershipbanned().toString());
-            arguments.put("craftbanned", item.getCraftbanned().toString());
-            arguments.put("worldbanned", item.getWorldbanned().toString());
-            arguments.put("itemname", item.getItemname());
-
             Text.Builder send = Text.builder();
-
             String banreason = "";
             if (!item.getBanreason().isEmpty()) {
-                banreason = Messages.bannedItemReason;
+                banreason = " &3- &7" + item.getBanreason();
             }
-
-            send.append(Messages.parseMessage(Messages.bannedItem + banreason, arguments));
-
-            String banInfo = Messages.bannedItemHover;
-            if (src.hasPermission(Permissions.LIST_EXTRA)) {
-                banInfo = banInfo + "\n" + Messages.bannedItemExtraInfo;
-            }
-            if (src.hasPermission(Permissions.EDIT_BANNED_ITEM)) {
-                banInfo = banInfo + "\n" + Messages.bannedItemEdit;
+            send.append(plugin.fromLegacy("&3- &6" + item.getItemname() + banreason));
+            if (src.hasPermission(Permissions.LIST_EXTRA) && src.hasPermission(Permissions.EDIT_BANNED_ITEM)) {
+                send.onHover(TextActions.showText(plugin.fromLegacy(
+                        "&cBanned 禁止属性 &7- &6使用&7: " + item.getUsagebanned() +
+                                " &6破坏&7: " + item.getBreakingbanned() +
+                                " &6放置&7: " + item.getPlacingbanned() +
+                                " &6拥有&7: " + item.getOwnershipbanned() +
+                                " &6制作&7: " + item.getCraftbanned() +
+                                " &6World&7: " + item.getWorldbanned() + ""
+                                + "\n&7Id: " + item.getItemid()
+                                + "\n&3单击此处可编辑此项"
+                )));
                 send.onClick(TextActions.runCommand("/restrict edit " + item.getItemid()));
+            } else if (src.hasPermission(Permissions.LIST_EXTRA) && !src.hasPermission(Permissions.EDIT_BANNED_ITEM)) {
+                send.onHover(TextActions.showText(plugin.fromLegacy(
+                        "&cBanned 禁止属性 &7- &6使用&7: " + item.getUsagebanned() +
+                                " &6破坏&7: " + item.getBreakingbanned() +
+                                " &6放置&7: " + item.getPlacingbanned() +
+                                " &6拥有&7: " + item.getOwnershipbanned() +
+                                " &6制作&7: " + item.getCraftbanned() +
+                                " &6World&7: " + item.getWorldbanned()
+                                + "\n&7Id: " + item.getItemid()
+                )));
+            } else {
+                send.onHover(TextActions.showText(plugin.fromLegacy(
+                        "&cBanned 禁止属性 &7- &6使用&7: " + item.getUsagebanned() +
+                                " &6破坏&7: " + item.getBreakingbanned() +
+                                " &6放置&7: " + item.getPlacingbanned() +
+                                " &6拥有&7: " + item.getOwnershipbanned() +
+                                " &6制作&7: " + item.getCraftbanned() +
+                                " &6World&7: " + item.getWorldbanned()
+                )));
             }
-
-            send.onHover(TextActions.showText(Messages.parseMessage(banInfo, arguments)));
-
             contents.add(send.build());
         }
 
         if (contents.isEmpty()) {
-            contents.add(plugin.fromLegacy(Messages.bannedItemNonSet));
+            contents.add(plugin.fromLegacy("&e没有设定禁止的物品"));
         }
 
         Collections.sort(contents);
 
         paginationService.builder()
-                .title(plugin.fromLegacy(Messages.bannedListTitle))
+                .title(plugin.fromLegacy("&6Banned 列表"))
                 .contents(contents)
-                .padding(plugin.fromLegacy(Messages.bannedListPadding))
+                .padding(Text.of("-"))
                 .sendTo(src);
         return CommandResult.success();
 

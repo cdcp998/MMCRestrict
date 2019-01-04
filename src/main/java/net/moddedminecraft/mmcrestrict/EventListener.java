@@ -13,7 +13,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.InteractBlockEvent;
-import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.*;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -146,58 +145,6 @@ public class EventListener {
         BlockSnapshot targetBlock = event.getTargetBlock();
 
         if (checkBanned(targetBlock, "use", player)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @Listener
-    public void onEntityInteract(InteractEntityEvent.Secondary.MainHand event, @Root Player player) {
-        if (player.hasPermission(Permissions.ITEM_BYPASS)) {
-            return;
-        }
-
-        ItemStack itemStack = player.getItemInHand(HandTypes.MAIN_HAND).get().createSnapshot().createStack();
-
-        if (checkBanned(itemStack, "use", player)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @Listener
-    public void onEntityInteract(InteractEntityEvent.Secondary.OffHand event, @Root Player player) {
-        if (player.hasPermission(Permissions.ITEM_BYPASS)) {
-            return;
-        }
-
-        ItemStack itemStack = player.getItemInHand(HandTypes.OFF_HAND).get().createSnapshot().createStack();
-
-        if (checkBanned(itemStack, "use", player)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @Listener
-    public void onEntityInteract(InteractEntityEvent.Primary.MainHand event, @Root Player player) {
-        if (player.hasPermission(Permissions.ITEM_BYPASS)) {
-            return;
-        }
-
-        ItemStack itemStack = player.getItemInHand(HandTypes.MAIN_HAND).get().createSnapshot().createStack();
-
-        if (checkBanned(itemStack, "use", player)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @Listener
-    public void onEntityInteract(InteractEntityEvent.Primary.OffHand event, @Root Player player) {
-        if (player.hasPermission(Permissions.ITEM_BYPASS)) {
-            return;
-        }
-
-        ItemStack itemStack = player.getItemInHand(HandTypes.OFF_HAND).get().createSnapshot().createStack();
-
-        if (checkBanned(itemStack, "use", player)) {
             event.setCancelled(true);
         }
     }
@@ -382,9 +329,9 @@ public class EventListener {
                     }
                     plugin.logToFile("action-log", player.getName() + " tried to " + banType.toLowerCase() + " " + item.getItemname());
                     if (!banType.equalsIgnoreCase("own")) {
-                        plugin.notifyOnlineStaff(plugin.fromLegacy("&8[&6MMCRestrict&8] &c" + player.getName() + " tried to " + banType.toLowerCase() + " " + item.getItemname()));
+                        plugin.notifyOnlineStaff(plugin.fromLegacy("&8[&6MMCRestrict&8] &c" + player.getName() + " 玩家尝试使用或放置 " + banType.toLowerCase() + " " + item.getItemname()));
                     }
-                    player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + " is banned" + reason));
+                    player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + " 被禁止使用或者放置!理由:" + reason));
                     checkInventory(player);
                     return true;
                 }
@@ -432,9 +379,9 @@ public class EventListener {
                         }
                         plugin.logToFile("action-log", player.getName() + " tried to " + banType.toLowerCase() + " " + item.getItemname());
                         if (!banType.equalsIgnoreCase("own")) {
-                            plugin.notifyOnlineStaff(plugin.fromLegacy("&8[&6MMCRestrict&8] &c" + player.getName() + " tried to " + banType.toLowerCase() + " " + item.getItemname()));
+                            plugin.notifyOnlineStaff(plugin.fromLegacy("&8[&6MMCRestrict&8] &c" + player.getName() + " 玩家尝试使用或放置 " + banType.toLowerCase() + " " + item.getItemname()));
                         }
-                        player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + " is banned" + reason));
+                        player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + "被禁止使用或者放置!理由:" + reason));
                         checkInventory(player);
                         return true;
                     }
@@ -473,7 +420,7 @@ public class EventListener {
                                 reason = " &3- &7" + item.getBanreason();
                             }
                             plugin.logToFile("action-log", item.getItemname()+ " was removed from " +player.getName()+ "'s inventory");
-                            player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + " is banned and has been removed from your inventory" + reason));
+                            player.sendMessage(plugin.fromLegacy("&c" + item.getItemname() + " 被禁止，并从您的持有物里删除" + reason));
                         }
                     }
                 }

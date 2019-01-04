@@ -1,6 +1,6 @@
 package net.moddedminecraft.mmcrestrict.Commands;
 
-import net.moddedminecraft.mmcrestrict.Config.Config;
+import net.moddedminecraft.mmcrestrict.Config;
 import net.moddedminecraft.mmcrestrict.Data.ItemData;
 import net.moddedminecraft.mmcrestrict.Main;
 import org.spongepowered.api.command.CommandException;
@@ -73,7 +73,7 @@ public class Hand implements CommandExecutor {
                 e.printStackTrace();
             }
             plugin.logToFile("ban-list", player.getName() + " added " +mainHandItem.getTranslation().get()+ " to the ban list");
-            player.sendMessage(Text.of(mainHandItem.getTranslation().get() + " was added to the list."));
+            player.sendMessage(Text.of(mainHandItem.getTranslation().get() + " 被添加到禁止列表中."));
         } else {
             throw new CommandException(Text.of("Main hand is empty"));
         }

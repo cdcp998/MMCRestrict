@@ -142,49 +142,49 @@ public class Edit implements CommandExecutor {
                             valid = true;
                             if (src.hasPermission(Permissions.REMOVE_BANNED_ITEM)) {
                                 contents.add(Text.builder()
-                                        .append(plugin.fromLegacy(("&3[&6Remove&3]")))
-                                        .onHover(TextActions.showText(plugin.fromLegacy("Click here to remove this item from the ban list")))
+                                        .append(plugin.fromLegacy(("&3[&6移除&3]")))
+                                        .onHover(TextActions.showText(plugin.fromLegacy("单击此处从禁止列表中移除此项目")))
                                         .onClick(TextActions.runCommand("/restrict remove " + item.getItemid()))
                                         .build());
                             }
                             contents.add(Text.builder().append(plugin.fromLegacy("&6ID: &7" + item.getItemid())).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Name: &7" + item.getItemname()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6物品名称: &7" + item.getItemname()))
                                     .onClick(TextActions.suggestCommand("/restrict edit " + item.getItemid() + " name " +item.getItemname()))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Name"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改&6名称"))).build());
 
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Ban Reason: &7" + item.getBanreason()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6禁止理由: &7" + item.getBanreason()))
                                     .onClick(TextActions.suggestCommand("/restrict edit " + item.getItemid() + " reason [MESSAGE]"))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Reason"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6理由"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Usage Banned: &7" + item.getUsagebanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6使用 Banned: &7" + item.getUsagebanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "use")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Usage"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Usage"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Breaking Banned: &7" + item.getBreakingbanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6破坏 Banned: &7" + item.getBreakingbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "break")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Breaking"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Breaking"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Placing Banned: &7" + item.getPlacingbanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6放置 Banned: &7" + item.getPlacingbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "place")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Placing"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Placing"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Ownership Banned: &7" + item.getOwnershipbanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6拥有 Banned: &7" + item.getOwnershipbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "own")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Ownership"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Ownership"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Drop Banned: &7" + item.getDropbanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6丢弃 Banned: &7" + item.getDropbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "drop")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Drop"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Drop"))).build());
 
-                            contents.add(Text.builder().append(plugin.fromLegacy("&6Craft Banned: &7" + item.getCraftbanned()))
+                            contents.add(Text.builder().append(plugin.fromLegacy("&6制作 Banned: &7" + item.getCraftbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "craft")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6Craft"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6Craft"))).build());
 
                             contents.add(Text.builder().append(plugin.fromLegacy("&6World Banned: &7" + item.getWorldbanned()))
                                     .onClick(TextActions.executeCallback(checkValue(item.getItemid(), "world")))
-                                    .onHover(TextActions.showText(plugin.fromLegacy("&3Click here to change the value of &6World"))).build());
+                                    .onHover(TextActions.showText(plugin.fromLegacy("&3点击此处修改 &6World"))).build());
                         }
                     }
                 }
